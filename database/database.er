@@ -1,0 +1,133 @@
+// https://dbdiagram.io/
+
+Table users {
+  id int [pk, increment]
+  name varchar
+  email varchar
+  password varchar
+  remember_token varchar [nullable]
+  created_at timestamp
+  updated_at timestamp
+
+}
+
+Table addresses {
+  id int [pk, increment]
+  user_id int [ref: > users.id]
+  address varchar
+  city varchar
+  state varchar
+  zipcode varchar
+  district varchar
+  number varchar
+  complement varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table orders {
+  id int [pk, increment]
+  user_id int [ref: > users.id] [nullable]
+  session_id varchar [nullable]
+  total decimal
+  status int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table categories {
+  id int [pk, increment]
+  name varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table brands {
+  id int [pk, increment]
+  name varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Tables products {
+  id int [pk, increment]
+  brand_id int [ref: > brands.id]
+  category_id int [ref: > categories.id]
+  name varchar
+  slug varchar
+  description text
+  price decimal
+  technical_description text
+  deleted_at timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Tables skus {
+  id int [pk, increment]
+  product_id int [ref: > products.id]
+  name varchar
+  price decimal
+  description text
+  deleted_at timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table order_skus {
+  id int [pk, increment]
+  order_id int [ref: > orders.id]
+  sku_id int [ref: > skus.id]
+  product json
+  quantity int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table payments {
+  id int [pk, increment]
+  external_id varchar
+  order_id int [ref: > orders.id]
+  method varchar
+  status int
+  installments int
+  approved_at timestamp
+  qr_code_64 text
+  qr_code text
+  ticket_url text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table shippings {
+  id int [pk, increment]
+  order_id int [ref: > orders.id]
+  address varchar
+  city varchar
+  state varchar
+  zipcode varchar
+  district varchar
+  number varchar
+  complement varchar
+  tracking_code varchar
+  status int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table features {
+  id int [pk, increment]
+  name varchar
+  unit varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table feature_sku {
+  id int [pk, increment]
+  sku_id int [ref: > skus.id]
+  feature_id int [ref: > features.id]
+  value varchar
+  created_at timestamp
+  updated_at timestamp
+}
