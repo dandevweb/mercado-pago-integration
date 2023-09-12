@@ -22,11 +22,11 @@ class CheckoutStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "transaction_amount" => "required|numeric|",
-            "token"              => "required|string|size:123",
-            "installments"       => "required|numeric",
-            "payment_method_id"  => "required|in_array:",
-            "payer"              => "required|email",
+            'transaction_amount' => 'required|numeric|',
+            'token'              => 'required|string|size:123',
+            'installments'       => 'required|numeric',
+            'payment_method_id'  => 'required|in_array:',
+            'payer'              => 'required|email',
         ];
     }
 }
